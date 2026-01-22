@@ -1,0 +1,22 @@
+{
+  "files.exclude": {
+    ".vscode": false,
+    ".github": false,
+    ".react-router": false,
+    ".firebase": false,
+    "build": false,
+    ".env.exemple": false,
+    ".dockerignore": false,
+    ".env": false,
+    ".firebaserc": false,
+    ".gitignore": false,
+    "Dockerfile": false,
+    "firebase.config.ts": false,
+    "pnpm-lock.yaml": false,
+    "react-router.config.ts": false,
+    "tsconfig.json": false,
+    "vite.config.ts": false,
+    "node_modules": false,
+    "firestore.rules": false
+  }
+}
