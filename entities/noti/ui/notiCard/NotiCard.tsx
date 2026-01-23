@@ -22,7 +22,7 @@ export default function NotiCard({
   return (
     <div
       className={clsx(
-        "bg-amber-100 w-40 border-2 border-transparent rounded-md",
+        "bg-amber-100 w-60 border-2 border-transparent rounded-md",
         className,
       )}
     >

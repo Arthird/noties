@@ -1,6 +1,7 @@
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState, type FormEvent } from "react";
-import { login, loginWithGoogle } from "shared/api/auth/auth";
 import { useNavigate } from "react-router";
+import { auth, googleProvider } from "shared/api/auth/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -9,13 +10,15 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const signUpWithGoogle = () => signInWithPopup(auth, googleProvider);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const result = await login(email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
 
       navigate("/dashboard");
     } catch (err: any) {
@@ -66,7 +69,7 @@ export default function LoginPage() {
 
       <button
         type="button"
-        onClick={loginWithGoogle}
+        onClick={signUpWithGoogle}
         className="w-full bg-red-500 text-white p-3 rounded-lg font-medium hover:bg-red-600"
         disabled={loading}
       >
