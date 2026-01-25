@@ -3,7 +3,7 @@ import { db } from "shared/api/db/db";
 import type { Noti, NotiDTO, NotiOwnerId } from "../model/types";
 import { dtoToNoti } from "entities/noti";
 
-export default async function getAllNoties(
+export async function getAllNoties(
   ownerId: NotiOwnerId,
 ): Promise<Noti[]> {
   const collectionRef = collection(db, "users", ownerId, "noties");

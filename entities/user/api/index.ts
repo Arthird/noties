@@ -7,3 +7,4 @@ export { signInWithGoogle } from "./signInWithGoogle";
 export { sendResetPasswordEmail } from "./sendResetPasswordEmail";
 export { signOut } from "./signOut";
 export { onAuthStateChange } from "./onAuthStateChange";
+export { useCurrentUser } from "./useCurrentUser";

@@ -1,20 +1,15 @@
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "shared/api/db/db";
-import type {
-  NotiContent,
-  NotiId,
-  NotiOwnerId,
-  NotiTitle,
-} from "../model/types";
+import type { NotiId, NotiOwnerId } from "../model/types";
 
 type EditNotiProps = {
   ownerId: NotiOwnerId;
   notiId: NotiId;
-  title?: NotiTitle;
-  content?: NotiContent;
+  title?: string;
+  content?: string;
 };
 
-export default async function editNoti({
+export async function editNoti({
   ownerId,
   notiId,
   title,
@@ -23,7 +18,7 @@ export default async function editNoti({
   const docRef = doc(db, "users", ownerId, "noties", notiId);
 
   const updates: Record<string, unknown> = {
-    edited: serverTimestamp(),
+    edited: new Date(),
   };
 
   if (title !== undefined) {

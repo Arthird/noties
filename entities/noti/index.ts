@@ -16,4 +16,6 @@ export type {
   NotiTitle,
 } from "./model/types";
 
+export { createNoti, deleteNoti, editNoti, getAllNoties, getNoti } from "./api";
+
 export { DEFAULT_TITLE, DEFAULT_CONTENT } from "./model/constaints";

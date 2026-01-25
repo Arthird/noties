@@ -24,9 +24,3 @@ export interface Noti {
   title: NotiTitle;
   content: NotiContent;
 }
-
-export type CreateNotiInput = Omit<Noti, "id" | "created" | "edited">;
-
-export type UpdateNotiInput = Partial<Pick<Noti, "title" | "content">> & {
-  id: NotiId;
-};

@@ -3,7 +3,7 @@ import { db } from "shared/api/db/db";
 import type { Noti, NotiDTO, NotiId, NotiOwnerId } from "../model/types";
 import { dtoToNoti } from "entities/noti";
 
-export default async function getNoti(
+export async function getNoti(
   ownerId: NotiOwnerId,
   notiId: NotiId,
 ): Promise<Noti | null> {

@@ -1,5 +1,7 @@
 import type { Route } from "./+types/home";
-import HomePage from "pages/HomePage";
+import HomePage, { clientAction as homeClientAction } from "pages/HomePage";
+
+export const clientAction = homeClientAction;
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -14,7 +16,5 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return (
-    <HomePage />
-  );
+  return <HomePage />;
 }
