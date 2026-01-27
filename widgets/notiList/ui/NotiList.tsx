@@ -22,12 +22,15 @@ export default function NotiList({
     [BREAKPOINTS.sm]: 1,
   };
   return (
-    <div className="flex flex-1 items-center justify-center min-h-100">
+    <div className="flex flex-1 ">
       {loading ? (
-        <p className="text-center">Wait please...</p>
+        <div className="flex flex-1 items-center justify-center min-h-100 m-auto">
+          {/*// TODO: Loader gif*/}
+          <p>Wait please...</p>
+        </div>
       ) : (
         <Masonry
-          className="flex -ml-4 w-auto"
+          className="flex flex-1 -ml-4 w-auto"
           breakpointCols={breakpointColumnsObj}
         >
           {noties.map((noti) => (

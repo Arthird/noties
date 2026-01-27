@@ -8,10 +8,3 @@ export function validateNotiTitle(title: string): boolean {
 export function validateNotiContent(content: string): boolean {
   return content.length <= MAX_CONTENT_LENGTH;
 }
-
-export function validateNotiOwner(notiId: NotiId, userId: NotiOwnerId) {
-  const userIdInNoti = "--user-";
-  return (
-    userId === notiId.slice(notiId.indexOf(userIdInNoti) + userIdInNoti.length)
-  );
-}

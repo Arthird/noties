@@ -1,25 +1,16 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "shared/api/db/db";
 import type { NotiId, NotiOwnerId } from "../model/types";
-import { validateNotiOwner } from "../lib/validators";
+import { notiIdToOwnerId } from "../lib/convertors";
 
-type EditNotiProps = {
-  ownerId: NotiOwnerId;
-  notiId: NotiId;
-  title?: string;
-  content?: string;
-};
-
-export async function editNoti({
-  ownerId,
-  notiId,
-  title,
-  content,
-}: EditNotiProps): Promise<void> {
-  if (!validateNotiOwner(notiId, ownerId)) {
-    throw Error("Attempt to edit someone else's noti");
-  }
-  const docRef = doc(db, "users", ownerId, "noties", notiId);
+export async function editNoti(
+  notiId: NotiId,
+  title?: string,
+  content?: string,
+  ownerId?: NotiOwnerId,
+): Promise<void> {
+  const resolvedOwnerId = ownerId ?? notiIdToOwnerId(notiId);
+  const docRef = doc(db, "users", resolvedOwnerId, "noties", notiId);
 
   const updates: Record<string, unknown> = {
     edited: new Date(),

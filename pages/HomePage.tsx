@@ -1,4 +1,4 @@
-import { useNoties } from "entities/noti/";
+import { deleteNoti, useNoties } from "entities/noti/";
 import NotiCard from "entities/noti/ui/notiCard/NotiCard";
 import { useCurrentUser } from "entities/user/api/useCurrentUser";
 import { Form, useNavigation, type ActionFunctionArgs } from "react-router";
@@ -34,13 +34,13 @@ export default function HomePage() {
           тестов
         </p>
         <p>userId: {userDataLoading ? "Загрузка данных" : user?.uid}</p>
-
-        Форма создания заметок: Список существующих заметок:
-        <NotiList noties={noties} loading={notiesLoading || userDataLoading} />
+        Форма создания заметок:
+        <NotiEditBanner /><br/>
+        Список существующих заметок:
+        <NotiList noties={noties} loading={notiesLoading || userDataLoading} onDeleteBtnClick={deleteNoti}/>
         <br />
         {error && <p>Ошибка: {error.message}</p>}
       </div>
-      <NotiEditBanner />
     </main>
   );
 }

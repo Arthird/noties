@@ -1,4 +1,4 @@
-import type { Noti, NotiContent, NotiDTO, NotiTitle } from "../model/types";
+import type { Noti, NotiContent, NotiDTO, NotiId, NotiTitle } from "../model/types";
 
 export function notiToDTO(noti: Noti): NotiDTO {
   return {
@@ -19,4 +19,9 @@ export function dtoToNoti(dto: NotiDTO): Noti {
     title: dto.title as NotiTitle,
     content: dto.content as NotiContent,
   };
+}
+
+export function notiIdToOwnerId(notiId: NotiId) {
+  const userIdInNoti = "--user-";
+  return notiId.slice(notiId.indexOf(userIdInNoti) + userIdInNoti.length);
 }
