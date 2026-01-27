@@ -1,7 +1,5 @@
 import type { Route } from "./+types/home";
-import HomePage, { clientAction as homeClientAction } from "pages/HomePage";
-
-export const clientAction = homeClientAction;
+import HomePage from "pages/HomePage";
 
 export function meta({}: Route.MetaArgs) {
   return [

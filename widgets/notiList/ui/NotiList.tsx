@@ -33,7 +33,7 @@ export default function NotiList({
           className="flex flex-1 -ml-4 w-auto"
           breakpointCols={breakpointColumnsObj}
         >
-          {noties.map((noti) => (
+          {noties.sort((notiA, notiB) => notiA.edited.getTime() - notiB.edited.getTime()).map((noti) => (
             <NotiCard
               key={noti.id}
               title={noti.title}

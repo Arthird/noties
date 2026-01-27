@@ -1,29 +1,41 @@
-import { deleteNoti, useNoties } from "entities/noti/";
-import NotiCard from "entities/noti/ui/notiCard/NotiCard";
+import {
+  createNoti,
+  deleteNoti,
+  editNoti,
+  getNoti,
+  useNoties,
+  type Noti,
+  type NotiId,
+} from "entities/noti/";
 import { useCurrentUser } from "entities/user/api/useCurrentUser";
-import { Form, useNavigation, type ActionFunctionArgs } from "react-router";
-import { createNoti } from "entities/noti";
-import NotiEditBanner from "entities/noti/ui/notiEditBanner/NotiEditBanner";
 import NotiList from "../widgets/notiList/ui/NotiList";
-
-export async function clientAction({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-
-  await createNoti({
-    ownerId: String(data.ownerId),
-    title: String(data.title),
-    content: String(data.content),
-  });
-
-  return { ok: true };
-}
+import { Button } from "@headlessui/react";
+import { useState } from "react";
+import NotiEditDialog from "features/notiEdit/NotiEditDialog";
 
 export default function HomePage() {
   const { user, loading: userDataLoading } = useCurrentUser();
   const { noties, loading: notiesLoading, error } = useNoties(user?.uid);
-  // const navigation = useNavigation();
-  // const isSubmitting = navigation.state === "submitting";
+
+  // Dialog
+  // const [isDialogOpen, setIsDialogOpen] = useState(false);
+  // const save = function (title: string, content: string) {
+  //   createNoti(user?.uid, title, content);
+  //   setIsDialogOpen(false);
+  // };
+  // const cancel = function () {
+  //   setIsDialogOpen(false);
+  // };
+  // const close = function () {
+  //   setIsDialogOpen(false);
+  // };
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [editingNoti, setEditingNoti] = useState<Noti | null>(null)
+  async function handleEditDialogOpen(notiId: NotiId) {
+    const noti = await getNoti(notiId);
+    setEditingNoti(noti)
+    setIsEditDialogOpen(true)
+  }
 
   return (
     <main>
@@ -34,10 +46,21 @@ export default function HomePage() {
           тестов
         </p>
         <p>userId: {userDataLoading ? "Загрузка данных" : user?.uid}</p>
-        Форма создания заметок:
-        <NotiEditBanner /><br/>
+        {/* Форма создания заметок: */}
+        {/* <Button onClick=Чисто под создание>создать заметку</Button> */}
+        <br />
+        <NotiEditDialog
+          isOpen={isEditDialogOpen}
+          setIsOpen={setIsEditDialogOpen}
+          noti={editingNoti}
+        />
         Список существующих заметок:
-        <NotiList noties={noties} loading={notiesLoading || userDataLoading} onDeleteBtnClick={deleteNoti}/>
+        <NotiList
+          noties={noties}
+          loading={notiesLoading || userDataLoading}
+          onDeleteBtnClick={deleteNoti}
+          onEditBtnClick={handleEditDialogOpen}
+        />
         <br />
         {error && <p>Ошибка: {error.message}</p>}
       </div>

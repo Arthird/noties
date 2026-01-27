@@ -14,13 +14,10 @@ import {
 } from "entities/noti";
 import { generateNotiId } from "../lib/generators";
 
-type createNotiProps = {
-  ownerId: NotiOwnerId;
-  title?: string;
-  content?: string;
-};
-
-export async function createNoti({ ownerId, title, content }: createNotiProps) {
+export async function createNoti(ownerId?: NotiOwnerId, title?: string, content?: string) {
+  if (!ownerId) {
+    throw Error("Creating nobody's noti try")
+  }
   const now = new Date();
   const notiId = generateNotiId(ownerId);
   const noti: Noti = {
