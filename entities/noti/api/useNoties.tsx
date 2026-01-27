@@ -15,7 +15,7 @@ export function useNoties(ownerId?: NotiOwnerId) {
       return;
     }
     const colRef = collection(db, "users", ownerId, "noties");
-    const q = query(colRef, orderBy("created", "desc"));
+    const q = query(colRef, orderBy("edited", "desc"));
 
     const unsubscribe = onSnapshot(
       q,

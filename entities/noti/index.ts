@@ -1,4 +1,4 @@
-export { default as NotiBanner } from "./ui/notiBanner/NotiBanner";
+export { default as NotiBanner } from "./ui/notiEditBanner/NotiEditBanner";
 export { default as NotiCard } from "./ui/notiCard/NotiCard";
 
 export { createNotiContent, createNotiTitle } from "./lib/creators";
@@ -16,6 +16,6 @@ export type {
   NotiTitle,
 } from "./model/types";
 
-export { createNoti, deleteNoti, editNoti, getAllNoties, getNoti } from "./api";
+export { createNoti, deleteNoti, editNoti, getAllNoties, getNoti, useNoties } from "./api";
 
 export { DEFAULT_TITLE, DEFAULT_CONTENT } from "./model/constaints";

@@ -6,15 +6,19 @@ export type DeleteButtonProps = {
   className?: string;
 };
 
-export default function DeleteButton({ onClick, className }: DeleteButtonProps) {
+export default function DeleteButton({
+  onClick,
+  className,
+}: DeleteButtonProps) {
   return (
     <Button
       onClick={onClick}
       className={clsx(
-        "transition-colors duration-200 ease-in",
-        "bg-neutral-800 text-amber-200 rounded-md",
-        "hover:bg-orange-700 active:bg-orange-950",
-        className
+        "transition-colors duration-200 ease-in border-2 border-transparent",
+        "bg-neutral-700 text-neutral-50 rounded-md",
+        "hover:bg-amber-700",
+        "active:bg-neutral-800 active:border-amber-700",
+        className,
       )}
     >
       Delete

@@ -1,8 +1,10 @@
-import { useNoties } from "entities/noti/api/useNoties";
+import { useNoties } from "entities/noti/";
 import NotiCard from "entities/noti/ui/notiCard/NotiCard";
 import { useCurrentUser } from "entities/user/api/useCurrentUser";
 import { Form, useNavigation, type ActionFunctionArgs } from "react-router";
 import { createNoti } from "entities/noti";
+import NotiEditBanner from "entities/noti/ui/notiEditBanner/NotiEditBanner";
+import NotiList from "../widgets/notiList/ui/NotiList";
 
 export async function clientAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -18,64 +20,27 @@ export async function clientAction({ request }: ActionFunctionArgs) {
 }
 
 export default function HomePage() {
-  const { user, loading } = useCurrentUser();
-  const { noties, loading: notesLoading, error } = useNoties(user?.uid);
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
+  const { user, loading: userDataLoading } = useCurrentUser();
+  const { noties, loading: notiesLoading, error } = useNoties(user?.uid);
+  // const navigation = useNavigation();
+  // const isSubmitting = navigation.state === "submitting";
 
   return (
     <main>
-      <h1>Домашняя страница</h1>
-      <p>
-        До появления нормальной навигации будет выступать как страница для
-        тестов
-      </p>
-      <p>userId: {loading ? "Загрузка данных" : user?.uid}</p>
-      Пример заметки:
-      <NotiCard title="Привет, йоу блин чумба">
-        Рапапапапапапапапаппапапапам
-      </NotiCard>
-      Форма создания заметок:
-      <Form method="post">
-        <fieldset
-          disabled={isSubmitting || !user}
-          className="flex flex-col gap-2"
-        >
-          <input type="hidden" name="ownerId" value={user?.uid || ""} />
+      <div className="max-w-6xl mx-auto p-4 text-neutral-50 min-h-screen">
+        <h1>Домашняя страница</h1>
+        <p>
+          До появления нормальной навигации будет выступать как страница для
+          тестов
+        </p>
+        <p>userId: {userDataLoading ? "Загрузка данных" : user?.uid}</p>
 
-          <input
-            name="title"
-            placeholder="Заголовок"
-            className={isSubmitting ? "opacity-50" : ""}
-          />
-
-          <textarea
-            name="content"
-            placeholder="Содержание"
-            className={isSubmitting ? "opacity-50" : ""}
-          />
-
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className={`bg-amber-700 ${isSubmitting ? "grayscale cursor-not-allowed" : ""}`}
-          >
-            {isSubmitting ? "Создание..." : "Создать заметку"}
-          </button>
-        </fieldset>
-      </Form>
-      Список существующих заметок:
-      {notesLoading ? (
-        <p>Загрузка заметок...</p>
-      ) : (
-        noties.map((note) => (
-          <NotiCard key={note.id} title={note.title}>
-            {note.content}
-          </NotiCard>
-        ))
-      )}
-      <br />
-      {error && <p>Ошибка: {error.message}</p>}
+        Форма создания заметок: Список существующих заметок:
+        <NotiList noties={noties} loading={notiesLoading || userDataLoading} />
+        <br />
+        {error && <p>Ошибка: {error.message}</p>}
+      </div>
+      <NotiEditBanner />
     </main>
   );
 }

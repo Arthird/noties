@@ -12,7 +12,7 @@ import {
   DEFAULT_TITLE,
   notiToDTO,
 } from "entities/noti";
-import { generateNotiId } from "./generateNotiId";
+import { generateNotiId } from "../lib/generators";
 
 type createNotiProps = {
   ownerId: NotiOwnerId;

@@ -22,13 +22,14 @@ export default function NotiCard({
   return (
     <div
       className={clsx(
-        "bg-amber-100 w-60 border-2 border-transparent rounded-md",
+        "bg-neutral-800 border-2 border-neutral-700",
         className,
       )}
     >
       <header>
         <Title>{title}</Title>
       </header>
+      <hr className="border-neutral-700 border" />
       <Content>{children}</Content>
       <footer className="flex h-8 gap-1 m-1">
         <EditButton className="flex-1" onClick={onEdit} />
