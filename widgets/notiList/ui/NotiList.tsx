@@ -1,12 +1,14 @@
 import Masonry from "react-masonry-css";
 import { NotiCard, type Noti, type NotiId } from "../../../entities/noti/";
 import { BREAKPOINTS } from "shared/config/ui/breackpoints";
+import clsx from 'clsx';
 
 type NotiListProps = {
   noties: Noti[];
   loading: boolean;
   onEditBtnClick?: (notiId: NotiId) => void;
   onDeleteBtnClick?: (notiId: NotiId) => void;
+  className?: string;
 };
 
 export default function NotiList({
@@ -14,6 +16,7 @@ export default function NotiList({
   loading,
   onEditBtnClick,
   onDeleteBtnClick,
+  className,
 }: NotiListProps) {
   const breakpointColumnsObj = {
     default: 4,
@@ -22,7 +25,7 @@ export default function NotiList({
     [BREAKPOINTS.sm]: 1,
   };
   return (
-    <div className="flex flex-1 ">
+    <div className={clsx("flex flex-1", className)}>
       {loading ? (
         <div className="flex flex-1 items-center justify-center min-h-100 m-auto">
           {/*// TODO: Loader gif*/}
@@ -33,17 +36,21 @@ export default function NotiList({
           className="flex flex-1 -ml-4 w-auto"
           breakpointCols={breakpointColumnsObj}
         >
-          {noties.sort((notiA, notiB) => notiA.edited.getTime() - notiB.edited.getTime()).map((noti) => (
-            <NotiCard
-              key={noti.id}
-              title={noti.title}
-              className="mb-4 ml-4 break-inside-avoid"
-              onEdit={() => onEditBtnClick?.(noti.id)}
-              onDelete={() => onDeleteBtnClick?.(noti.id)}
-            >
-              {noti.content}
-            </NotiCard>
-          ))}
+          {noties
+            .sort(
+              (notiA, notiB) => notiA.edited.getTime() - notiB.edited.getTime(),
+            )
+            .map((noti) => (
+              <NotiCard
+                key={noti.id}
+                title={noti.title}
+                className="mb-4 ml-4 break-inside-avoid"
+                onEdit={() => onEditBtnClick?.(noti.id)}
+                onDelete={() => onDeleteBtnClick?.(noti.id)}
+              >
+                {noti.content}
+              </NotiCard>
+            ))}
         </Masonry>
       )}
     </div>
