@@ -16,7 +16,6 @@ type NotiDialogProps = {
   onCancel: (title: string, content: string) => any;
   startTitle?: string;
   startContent?: string;
-  isSaving?: boolean;
 };
 
 export default function NotiDialog({
@@ -26,7 +25,6 @@ export default function NotiDialog({
   onCancel,
   startTitle = "",
   startContent = "",
-  isSaving = false,
 }: NotiDialogProps) {
   const [title, setTitle] = useState(startTitle);
   const [content, setContent] = useState(startContent);
@@ -62,7 +60,6 @@ export default function NotiDialog({
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              disabled={isSaving}
             />
             <hr className="my-1" />
             <Textarea
@@ -70,12 +67,10 @@ export default function NotiDialog({
               placeholder="Content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              disabled={isSaving}
             />
             <div className="mt-4 flex justify-end gap-2">
               <Button
                 onClick={handleCancel}
-                disabled={isSaving}
                 className={clsx(
                   "transition-colors duration-200 ease-in border-2 border-transparent px-2 py-1 ",
                   "bg-neutral-700 text-neutral-50 rounded-md",
@@ -88,7 +83,6 @@ export default function NotiDialog({
               </Button>
               <Button
                 onClick={handleSubmit}
-                disabled={isSaving}
                 className={clsx(
                   "transition-colors duration-200 ease-in px-3 py-1",
                   "bg-neutral-700 text-neutral-50 rounded-md border-2 border-transparent",
@@ -97,7 +91,7 @@ export default function NotiDialog({
                   "disabled:opacity-50 disabled:cursor-not-allowed",
                 )}
               >
-                {isSaving ? "Saving..." : "Save"}
+                Save
               </Button>
             </div>
           </div>
