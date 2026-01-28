@@ -5,11 +5,10 @@ export {
   signUpWithEmail,
   signInWithEmail,
   signInWithGoogle,
-  sendResetPasswordEmail,
+  sendPasswordResetEmail,
   signOut,
-  onAuthStateChange,
-  useCurrentUser
+  onAuthStateChanged,
+  useCurrentUser,
 } from "./api";
 
 export type { UserProfile, User } from "./model/types";
-

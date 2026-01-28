@@ -1,5 +1,9 @@
-import { signInWithGoogle, signInWithEmail } from "entities/user";
-import { useState, type FormEvent } from "react";
+import {
+  signInWithGoogle,
+  signInWithEmail,
+  onAuthStateChanged,
+} from "entities/user";
+import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 
 export default function LoginPage() {
@@ -7,7 +11,18 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged((user) => {
+      if (user) {
+        navigate("/", { replace: true });
+      }
+    });
+
+    return unsubscribe;
+  }, [navigate]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -15,30 +30,26 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const result = await signInWithEmail(email, password);
-      navigate("/");
+      await signInWithEmail(email, password);
     } catch (err: any) {
       console.error("Ошибка входа:", JSON.stringify(err));
       setError(err.code || "Ошибка входа");
-    } finally {
       setLoading(false);
     }
   };
 
-  const handleSignUpWithGoogle = async() => {
+  const handleSignUpWithGoogle = async () => {
     setLoading(true);
     setError("");
 
     try {
-      const result = await signInWithGoogle();
-      navigate("/");
+      await signInWithGoogle();
     } catch (err: any) {
       console.error("Ошибка входа:", JSON.stringify(err));
       setError(err.code || "Ошибка входа");
-    } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4 p-6">
@@ -81,8 +92,8 @@ export default function LoginPage() {
       <button
         type="button"
         onClick={handleSignUpWithGoogle}
-        className="w-full bg-red-500 text-white p-3 rounded-lg font-medium hover:bg-red-600"
         disabled={loading}
+        className="w-full bg-red-500 text-white p-3 rounded-lg font-medium hover:bg-red-600 disabled:opacity-50"
       >
         Войти через Google
       </button>
