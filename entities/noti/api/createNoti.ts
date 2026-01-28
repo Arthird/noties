@@ -1,4 +1,4 @@
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "shared/api/db/db";
 import type {
   NotiDTO,
@@ -18,6 +18,11 @@ export async function createNoti(ownerId?: NotiOwnerId, title?: string, content?
   if (!ownerId) {
     throw Error("Creating nobody's noti try")
   }
+
+  if (!title && !content) {
+    return
+  }
+
   const now = new Date();
   const notiId = generateNotiId(ownerId);
   const noti: Noti = {

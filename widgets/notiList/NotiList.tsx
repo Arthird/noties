@@ -5,7 +5,6 @@ import clsx from "clsx";
 
 type NotiListProps = {
   noties: Noti[];
-  loading: boolean;
   onEditBtnClick?: (notiId: NotiId) => void;
   onDeleteBtnClick?: (notiId: NotiId) => void;
   className?: string;
@@ -13,7 +12,6 @@ type NotiListProps = {
 
 export default function NotiList({
   noties,
-  loading,
   onEditBtnClick,
   onDeleteBtnClick,
   className,

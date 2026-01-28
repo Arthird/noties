@@ -52,25 +52,32 @@ export default function HomePage() {
         </div>
       </main>
     );
-  } else if (noties.length === 0) {
   }
+
   return (
-    <main>
-      <div
-        className={clsx(
-          "flex justify-self-center text-neutral-50",
-          "min-h-dvh w-full max-w-6xl sm:px-4",
-        )}
-      >
-        <NotiList
-          noties={noties}
-          loading={loading}
-          onDeleteBtnClick={deleteNoti}
-          onEditBtnClick={handleEditDialogOpen}
-        />
-        <br />
-        {error && <p>Ошибка: {error?.message}</p>}
-      </div>
+    <main className="h-full">
+      {noties.length === 0 ? (
+        <div className=" flex justify-center items-center h-full">
+          <p>
+            Click on the button and create the first <b>Noti</b>
+          </p>
+        </div>
+      ) : (
+        <div
+          className={clsx(
+            "flex flex-1 justify-self-center text-neutral-50",
+            " w-full max-w-6xl sm:px-4",
+          )}
+        >
+          <NotiList
+            noties={noties}
+            onDeleteBtnClick={deleteNoti}
+            onEditBtnClick={handleEditDialogOpen}
+          />
+          <br />
+          {error && <p>Ошибка: {error?.message}</p>}
+        </div>
+      )}
       <NotiEditDialog
         isOpen={isEditDialogOpen}
         setIsOpen={setIsEditDialogOpen}
@@ -83,7 +90,7 @@ export default function HomePage() {
       />
       <NotiCreateButton
         onClick={handleCreateDialogOpen}
-        className="sticky z-10 bottom-4 left-5"
+        className="fixed z-10 bottom-4 right-5"
       />
     </main>
   );
