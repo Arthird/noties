@@ -26,33 +26,24 @@ export default function NotiList({
   };
   return (
     <div className={clsx("flex flex-1", className)}>
-      {loading ? (
-        <div className="flex flex-1 items-center justify-center min-h-100 m-auto">
-          {/*// TODO: Loader gif*/}
-          <p>Wait please...</p>
-        </div>
-      ) : (
-        <Masonry
-          className="flex flex-1 -ml-4 w-auto"
-          breakpointCols={breakpointColumnsObj}
-        >
-          {noties
-            .sort(
-              (notiA, notiB) => notiA.edited.getTime() - notiB.edited.getTime(),
-            )
-            .map((noti) => (
-              <NotiCard
-                key={noti.id}
-                title={noti.title}
-                className="mb-4 ml-4 break-inside-avoid"
-                onEdit={() => onEditBtnClick?.(noti.id)}
-                onDelete={() => onDeleteBtnClick?.(noti.id)}
-              >
-                {noti.content}
-              </NotiCard>
-            ))}
-        </Masonry>
-      )}
+      <Masonry
+        className="flex flex-1 -ml-4 w-auto"
+        breakpointCols={breakpointColumnsObj}
+      >
+        {noties
+          .sort(
+            (notiA, notiB) => notiB.edited.getTime() - notiA.edited.getTime(),
+          )
+          .map((noti) => (
+            <NotiCard
+              key={noti.id}
+              noti={noti}
+              className="mb-4 ml-4 break-inside-avoid"
+              onEdit={() => onEditBtnClick?.(noti.id)}
+              onDelete={() => onDeleteBtnClick?.(noti.id)}
+            />
+          ))}
+      </Masonry>
     </div>
   );
 }

@@ -1,28 +1,75 @@
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  DocumentReference,
+  updateDoc,
+  type DocumentData,
+} from "firebase/firestore";
 import { db } from "shared/api/db/db";
-import type { NotiId, NotiOwnerId } from "../model/types";
-import { notiIdToOwnerId } from "../lib/convertors";
+import type { Noti, NotiId, NotiOwnerId } from "../model/types";
+import { notiIdToOwnerId, notiToDTO } from "../lib/convertors";
+import { getNoti } from "./getNoti";
+import { isNoti } from "../lib/validators";
+import { createNotiContent, createNotiTitle } from "../lib/creators";
 
 export async function editNoti(
   notiId: NotiId,
   title?: string,
   content?: string,
-  ownerId?: NotiOwnerId,
+): Promise<void>;
+
+export async function editNoti(
+  noti: Noti,
+  title?: string,
+  content?: string,
+): Promise<void>;
+
+export async function editNoti(
+  notiIdOrNoti: Noti | NotiId,
+  title?: string,
+  content?: string,
 ): Promise<void> {
-  const resolvedOwnerId = ownerId ?? notiIdToOwnerId(notiId);
-  const docRef = doc(db, "users", resolvedOwnerId, "noties", notiId);
+  let docRef: DocumentReference<DocumentData, DocumentData>;
+  let editedNoti: Noti;
+  let resolvedOwnerId: NotiOwnerId;
+  let notiId: NotiId;
 
-  const updates: Record<string, unknown> = {
-    edited: new Date(),
-  };
+  if (isNoti(notiIdOrNoti)) {
+    const noti = notiIdOrNoti;
+    notiId = noti.id;
+    resolvedOwnerId = notiIdToOwnerId(noti.id);
 
-  if (title !== undefined) {
-    updates.title = title;
+    editedNoti = { ...noti };
+    if (title) {
+      editedNoti.title = createNotiTitle(title);
+    }
+    if (content) {
+      editedNoti.content = createNotiContent(content);
+    }
+  } else {
+    notiId = notiIdOrNoti;
+    resolvedOwnerId = notiIdToOwnerId(notiId);
+
+    const noti = await getNoti(notiId);
+    if (!noti) {
+      throw new Error(`Notification with id ${notiId} not found`);
+    }
+
+    editedNoti = noti;
+    if (title) {
+      editedNoti.title = createNotiTitle(title);
+    }
+    if (content) {
+      editedNoti.content = createNotiContent(content);
+    }
+  }
+  docRef = doc(db, "users", resolvedOwnerId, "noties", notiId);
+
+  const now = new Date();
+  editedNoti.edited = now;
+
+  if (editedNoti.content === content && editedNoti.title === title) {
+    return;
   }
 
-  if (content !== undefined) {
-    updates.content = content;
-  }
-
-  await updateDoc(docRef, updates);
+  await updateDoc(docRef, notiToDTO(editedNoti));
 }

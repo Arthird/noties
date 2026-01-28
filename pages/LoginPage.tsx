@@ -1,7 +1,6 @@
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithGoogle, signInWithEmail } from "entities/user";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
-import { auth, googleProvider } from "shared/api/auth/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -10,17 +9,14 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const signUpWithGoogle = () => signInWithPopup(auth, googleProvider);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-
-      navigate("/dashboard");
+      const result = await signInWithEmail(email, password);
+      navigate("/");
     } catch (err: any) {
       console.error("Ошибка входа:", JSON.stringify(err));
       setError(err.code || "Ошибка входа");
@@ -28,6 +24,21 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  const handleSignUpWithGoogle = async() => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const result = await signInWithGoogle();
+      navigate("/");
+    } catch (err: any) {
+      console.error("Ошибка входа:", JSON.stringify(err));
+      setError(err.code || "Ошибка входа");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4 p-6">
@@ -69,7 +80,7 @@ export default function LoginPage() {
 
       <button
         type="button"
-        onClick={signUpWithGoogle}
+        onClick={handleSignUpWithGoogle}
         className="w-full bg-red-500 text-white p-3 rounded-lg font-medium hover:bg-red-600"
         disabled={loading}
       >
