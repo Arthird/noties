@@ -1,7 +1,7 @@
 import Masonry from "react-masonry-css";
-import { NotiCard, type Noti, type NotiId } from "../../../entities/noti/";
+import { NotiCard, type Noti, type NotiId } from "../../entities/noti";
 import { BREAKPOINTS } from "shared/config/ui/breackpoints";
-import clsx from 'clsx';
+import clsx from "clsx";
 
 type NotiListProps = {
   noties: Noti[];

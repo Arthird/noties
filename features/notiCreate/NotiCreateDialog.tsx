@@ -1,23 +1,22 @@
-import { editNoti, type Noti } from "entities/noti";
+import { createNoti } from "entities/noti";
 import NotiDialog from "entities/noti/ui/notiDialog/NotiDialog";
 
-type NotiEditDialogProps = {
+type NotiCreateDialogProps = {
   isOpen: boolean;
   setIsOpen: (state: boolean) => any;
-  noti: Noti | null | undefined;
+  ownerId: string | null | undefined;
 };
 
-export default function NotiEditDialog({
+export default function NotiCreateDialog({
   isOpen,
   setIsOpen,
-  noti,
-}: NotiEditDialogProps) {
-  if (!noti) {
-    return <></>
+  ownerId,
+}: NotiCreateDialogProps) {
+  if (!ownerId) {
+    return <></>;
   }
-
   const save = function (title: string, content: string) {
-    editNoti(noti.id, title, content);
+    createNoti(ownerId, title, content);
     setIsOpen(false);
   };
   const cancel = function () {
@@ -33,8 +32,6 @@ export default function NotiEditDialog({
       onSave={save}
       onCancel={cancel}
       onClose={close}
-      startTitle={noti.title}
-      startContent={noti.content}
     />
   );
 }

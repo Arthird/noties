@@ -6,6 +6,7 @@ import {
   Input,
   Textarea,
 } from "@headlessui/react";
+import clsx from "clsx";
 
 type NotiDialogProps = {
   isOpen: boolean;
@@ -39,18 +40,18 @@ export default function NotiDialog({
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/50" />
 
-      <div className="fixed inset-0 flex items-center justify-center p-4 ">
-        <DialogPanel className="rounded bg-neutral-800 p-4 shadow-xl w-4/5 h-[80dvh]">
+      <div className="fixed inset-0 flex items-center justify-center">
+        <DialogPanel className="rounded bg-neutral-800 p-4 shadow-xl sm:w-4/5 sm:h-[80dvh] w-full h-full">
           <form className="flex flex-1 flex-col h-full" onSubmit={handleSubmit}>
             <Input
-              className="text-xl"
+              className="text-xl outline-0"
               placeholder="Title"
               name="title"
               defaultValue={startTitle}
             />
             <hr className="my-1" />
             <Textarea
-              className="resize-none h-full"
+              className="resize-none h-full outline-0"
               placeholder="Content"
               name="content"
               defaultValue={startContent}
@@ -58,13 +59,23 @@ export default function NotiDialog({
             <div className="mt-4 flex justify-end gap-2">
               <Button
                 onClick={onCancel}
-                className="px-3 py-1.5 rounded border border-slate-300 text-slate-700"
+                className={clsx(
+                  "transition-colors duration-200 ease-in border-2 border-transparent px-2 py-1 ",
+                  "bg-neutral-700 text-neutral-50 rounded-md",
+                  "hover:bg-amber-700",
+                  "active:bg-neutral-800 active:border-amber-700",
+                )}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="px-3 py-1.5 rounded bg-sky-600 text-white"
+                className={clsx(
+                  "transition-colors duration-200 ease-in px-3 py-1",
+                  "bg-neutral-700 text-neutral-50 rounded-md border-2 border-transparent",
+                  "hover:bg-neutral-600 hover:text-neutral-200",
+                  "active:border-neutral-600 active:bg-neutral-800",
+                )}
               >
                 Save
               </Button>

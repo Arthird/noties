@@ -1,68 +1,70 @@
 import {
-  createNoti,
   deleteNoti,
-  editNoti,
   getNoti,
   useNoties,
   type Noti,
   type NotiId,
 } from "entities/noti/";
 import { useCurrentUser } from "entities/user/api/useCurrentUser";
-import NotiList from "../widgets/notiList/ui/NotiList";
-import { Button } from "@headlessui/react";
+import NotiList from "../widgets/notiList/NotiList";
 import { useState } from "react";
 import NotiEditDialog from "features/notiEdit/NotiEditDialog";
+import NotiCreateDialog from "features/notiCreate/NotiCreateDialog";
+import NotiCreateButton from "features/notiCreate/NotiCreateButton";
+import { Navigate } from "react-router";
 
 export default function HomePage() {
   const { user, loading: userDataLoading } = useCurrentUser();
   const { noties, loading: notiesLoading, error } = useNoties(user?.uid);
 
-  // Dialog
-  // const [isDialogOpen, setIsDialogOpen] = useState(false);
-  // const save = function (title: string, content: string) {
-  //   createNoti(user?.uid, title, content);
-  //   setIsDialogOpen(false);
-  // };
-  // const cancel = function () {
-  //   setIsDialogOpen(false);
-  // };
-  // const close = function () {
-  //   setIsDialogOpen(false);
-  // };
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [editingNoti, setEditingNoti] = useState<Noti | null>(null)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  async function handleCreateDialogOpen() {
+    setIsCreateDialogOpen(true);
+  }
+
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingNoti, setEditingNoti] = useState<Noti | null>(null);
   async function handleEditDialogOpen(notiId: NotiId) {
     const noti = await getNoti(notiId);
-    setEditingNoti(noti)
-    setIsEditDialogOpen(true)
+    setEditingNoti(noti);
+    setIsEditDialogOpen(true);
+  }
+
+  console.log(!!user, !!userDataLoading)
+  if (!userDataLoading && !user) {
+    return <Navigate to="/login" replace />;
   }
 
   return (
     <main>
-      <div className="max-w-6xl mx-auto p-4 text-neutral-50 min-h-screen">
-        <h1>Домашняя страница</h1>
-        <p>
-          До появления нормальной навигации будет выступать как страница для
-          тестов
-        </p>
-        <p>userId: {userDataLoading ? "Загрузка данных" : user?.uid}</p>
-        {/* Форма создания заметок: */}
-        {/* <Button onClick=Чисто под создание>создать заметку</Button> */}
-        <br />
+      <div className="flex max-w-6xl mx-auto sm:mx-5 text-neutral-50 min-h-dvh ">
+        {noties.length > 0 ? (
+          <>
+            <NotiList
+              noties={noties}
+              loading={notiesLoading || userDataLoading}
+              onDeleteBtnClick={deleteNoti}
+              onEditBtnClick={handleEditDialogOpen}
+            />
+            <br />
+            {error && <p>Ошибка: {error.message}</p>}
+          </>
+        ) : (
+          <div className="flex flex-1 items-center justify-center">
+            <p>Just create your first Noti</p>
+          </div>
+        )}
+        <NotiCreateButton onClick={handleCreateDialogOpen} className="absolute bottom-4 right-5" />
         <NotiEditDialog
           isOpen={isEditDialogOpen}
           setIsOpen={setIsEditDialogOpen}
           noti={editingNoti}
         />
-        Список существующих заметок:
-        <NotiList
-          noties={noties}
-          loading={notiesLoading || userDataLoading}
-          onDeleteBtnClick={deleteNoti}
-          onEditBtnClick={handleEditDialogOpen}
+        <NotiCreateDialog
+          isOpen={isCreateDialogOpen}
+          setIsOpen={setIsCreateDialogOpen}
+          ownerId={user?.uid}
         />
-        <br />
-        {error && <p>Ошибка: {error.message}</p>}
       </div>
     </main>
   );
