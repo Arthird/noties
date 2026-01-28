@@ -21,7 +21,7 @@ export default function NotiCreateDialog({
   const save = async function (title: string, content: string) {
     setIsSaving(true);
     try {
-      await createNoti(ownerId, title, content);
+      createNoti(ownerId, title, content);
       setIsOpen(false);
     } catch (error) {
       console.error("Failed to create noti:", error);

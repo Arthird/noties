@@ -7,12 +7,13 @@ import {
   Textarea,
 } from "@headlessui/react";
 import clsx from "clsx";
+import { useState, useEffect } from "react";
 
 type NotiDialogProps = {
   isOpen: boolean;
   onSave: (title: string, content: string) => any;
-  onClose: () => any;
-  onCancel: () => any;
+  onClose: (title: string, content: string) => any;
+  onCancel: (title: string, content: string) => any;
   startTitle?: string;
   startContent?: string;
   isSaving?: boolean;
@@ -23,46 +24,57 @@ export default function NotiDialog({
   onSave,
   onClose,
   onCancel,
-  startTitle,
-  startContent,
+  startTitle = "",
+  startContent = "",
   isSaving = false,
 }: NotiDialogProps) {
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+  const [title, setTitle] = useState(startTitle);
+  const [content, setContent] = useState(startContent);
 
-    const formData = new FormData(e.currentTarget);
+  useEffect(() => {
+    if (isOpen) {
+      setTitle(startTitle || "");
+      setContent(startContent || "");
+    }
+  }, [isOpen, startTitle, startContent]);
 
-    const title = formData.get("title") as string;
-    const content = formData.get("content") as string;
-
+  function handleSubmit() {
     onSave(title, content);
   }
 
+  function handleCancel() {
+    onCancel(title, content);
+  }
+
+  function handleDialogClose() {
+    onClose(title, content);
+  }
+
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+    <Dialog open={isOpen} onClose={handleDialogClose} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/50" />
 
       <div className="fixed inset-0 flex items-center justify-center">
         <DialogPanel className="rounded bg-neutral-800 p-4 shadow-xl sm:w-4/5 sm:h-[80dvh] w-full h-full">
-          <form className="flex flex-1 flex-col h-full" onSubmit={handleSubmit}>
+          <div className="flex flex-1 flex-col h-full">
             <Input
               className="text-xl outline-0"
               placeholder="Title"
-              name="title"
-              defaultValue={startTitle}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               disabled={isSaving}
             />
             <hr className="my-1" />
             <Textarea
               className="resize-none h-full outline-0"
               placeholder="Content"
-              name="content"
-              defaultValue={startContent}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
               disabled={isSaving}
             />
             <div className="mt-4 flex justify-end gap-2">
               <Button
-                onClick={onCancel}
+                onClick={handleCancel}
                 disabled={isSaving}
                 className={clsx(
                   "transition-colors duration-200 ease-in border-2 border-transparent px-2 py-1 ",
@@ -75,7 +87,7 @@ export default function NotiDialog({
                 Cancel
               </Button>
               <Button
-                type="submit"
+                onClick={handleSubmit}
                 disabled={isSaving}
                 className={clsx(
                   "transition-colors duration-200 ease-in px-3 py-1",
@@ -88,7 +100,7 @@ export default function NotiDialog({
                 {isSaving ? "Saving..." : "Save"}
               </Button>
             </div>
-          </form>
+          </div>
         </DialogPanel>
       </div>
     </Dialog>

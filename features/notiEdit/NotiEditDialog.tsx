@@ -22,7 +22,7 @@ export default function NotiEditDialog({
   const save = async function (title: string, content: string) {
     setIsSaving(true);
     try {
-      await editNoti(noti.id, title, content);
+      editNoti(noti.id, title, content);
       setIsOpen(false);
     } catch (error) {
       console.error("Failed to edit noti:", error);
