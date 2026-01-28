@@ -67,9 +67,5 @@ export async function editNoti(
   const now = new Date();
   editedNoti.edited = now;
 
-  if (editedNoti.content === content && editedNoti.title === title) {
-    return;
-  }
-
   await updateDoc(docRef, notiToDTO(editedNoti));
 }

@@ -15,6 +15,7 @@ type NotiDialogProps = {
   onCancel: () => any;
   startTitle?: string;
   startContent?: string;
+  isSaving?: boolean;
 };
 
 export default function NotiDialog({
@@ -24,6 +25,7 @@ export default function NotiDialog({
   onCancel,
   startTitle,
   startContent,
+  isSaving = false,
 }: NotiDialogProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -48,6 +50,7 @@ export default function NotiDialog({
               placeholder="Title"
               name="title"
               defaultValue={startTitle}
+              disabled={isSaving}
             />
             <hr className="my-1" />
             <Textarea
@@ -55,29 +58,34 @@ export default function NotiDialog({
               placeholder="Content"
               name="content"
               defaultValue={startContent}
+              disabled={isSaving}
             />
             <div className="mt-4 flex justify-end gap-2">
               <Button
                 onClick={onCancel}
+                disabled={isSaving}
                 className={clsx(
                   "transition-colors duration-200 ease-in border-2 border-transparent px-2 py-1 ",
                   "bg-neutral-700 text-neutral-50 rounded-md",
                   "hover:bg-amber-700",
                   "active:bg-neutral-800 active:border-amber-700",
+                  "disabled:opacity-50 disabled:cursor-not-allowed",
                 )}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
+                disabled={isSaving}
                 className={clsx(
                   "transition-colors duration-200 ease-in px-3 py-1",
                   "bg-neutral-700 text-neutral-50 rounded-md border-2 border-transparent",
                   "hover:bg-neutral-600 hover:text-neutral-200",
                   "active:border-neutral-600 active:bg-neutral-800",
+                  "disabled:opacity-50 disabled:cursor-not-allowed",
                 )}
               >
-                Save
+                {isSaving ? "Saving..." : "Save"}
               </Button>
             </div>
           </form>

@@ -1,5 +1,6 @@
 import { createNoti } from "entities/noti";
 import NotiDialog from "entities/noti/ui/notiDialog/NotiDialog";
+import { useState } from "react";
 
 type NotiCreateDialogProps = {
   isOpen: boolean;
@@ -12,12 +13,21 @@ export default function NotiCreateDialog({
   setIsOpen,
   ownerId,
 }: NotiCreateDialogProps) {
+  const [isSaving, setIsSaving] = useState(false);
+
   if (!ownerId) {
     return <></>;
   }
-  const save = function (title: string, content: string) {
-    createNoti(ownerId, title, content);
-    setIsOpen(false);
+  const save = async function (title: string, content: string) {
+    setIsSaving(true);
+    try {
+      await createNoti(ownerId, title, content);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Failed to create noti:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
   const cancel = function () {
     setIsOpen(false);
@@ -32,6 +42,7 @@ export default function NotiCreateDialog({
       onSave={save}
       onCancel={cancel}
       onClose={close}
+      isSaving={isSaving}
     />
   );
 }

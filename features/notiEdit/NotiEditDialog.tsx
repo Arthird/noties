@@ -1,5 +1,6 @@
 import { editNoti, type Noti } from "entities/noti";
 import NotiDialog from "entities/noti/ui/notiDialog/NotiDialog";
+import { useState } from "react";
 
 type NotiEditDialogProps = {
   isOpen: boolean;
@@ -12,13 +13,22 @@ export default function NotiEditDialog({
   setIsOpen,
   noti,
 }: NotiEditDialogProps) {
+  const [isSaving, setIsSaving] = useState(false);
+
   if (!noti) {
-    return <></>
+    return <></>;
   }
 
-  const save = function (title: string, content: string) {
-    editNoti(noti.id, title, content);
-    setIsOpen(false);
+  const save = async function (title: string, content: string) {
+    setIsSaving(true);
+    try {
+      await editNoti(noti.id, title, content);
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Failed to edit noti:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
   const cancel = function () {
     setIsOpen(false);
@@ -35,6 +45,7 @@ export default function NotiEditDialog({
       onClose={close}
       startTitle={noti.title}
       startContent={noti.content}
+      isSaving={isSaving}
     />
   );
 }
