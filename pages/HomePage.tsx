@@ -14,6 +14,7 @@ import NotiCreateButton from "features/notiCreate/NotiCreateButton";
 import { useNavigate } from "react-router";
 import Loading from "widgets/loading/Loading";
 import clsx from "clsx";
+import Header from "widgets/header/ui/Header";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -40,58 +41,63 @@ export default function HomePage() {
     setIsEditDialogOpen(true);
   }
 
-  if (!loading && !user) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate("/login");
+    }
+  }, [loading, user, navigate]);
 
   if (loading) {
     return (
       <main>
         <div className="flex justify-center text-neutral-50 min-h-dvh ">
-          <Loading />;
+          <Loading />
         </div>
       </main>
     );
   }
 
   return (
-    <main className="h-full">
-      {noties.length === 0 ? (
-        <div className=" flex justify-center items-center h-full">
-          <p>
-            Click on the button and create the first <b>Noti</b>
-          </p>
-        </div>
-      ) : (
-        <div
-          className={clsx(
-            "flex flex-1 justify-self-center text-neutral-50",
-            " w-full max-w-6xl sm:px-4",
-          )}
-        >
-          <NotiList
-            noties={noties}
-            onDeleteBtnClick={deleteNoti}
-            onEditBtnClick={handleEditDialogOpen}
-          />
-          <br />
-          {error && <p>Ошибка: {error?.message}</p>}
-        </div>
-      )}
-      <NotiEditDialog
-        isOpen={isEditDialogOpen}
-        setIsOpen={setIsEditDialogOpen}
-        noti={editingNoti}
-      />
-      <NotiCreateDialog
-        isOpen={isCreateDialogOpen}
-        setIsOpen={setIsCreateDialogOpen}
-        ownerId={user?.uid}
-      />
-      <NotiCreateButton
-        onClick={handleCreateDialogOpen}
-        className="fixed z-10 bottom-4 right-5"
-      />
-    </main>
+    <div className="flex flex-1 flex-col min-h-screen">
+      <Header />
+      <main className="flex flex-1 justify-center h-full">
+        {noties.length === 0 ? (
+          <div className=" flex flex-1 justify-center self-center h-full">
+            <p>
+              Click on the button and create the first <b>Noti</b>
+            </p>
+          </div>
+        ) : (
+          <div
+            className={clsx(
+              "flex flex-1 text-neutral-50",
+              "w-full max-w-6xl sm:px-4",
+            )}
+          >
+            <NotiList
+              noties={noties}
+              onDeleteBtnClick={deleteNoti}
+              onEditBtnClick={handleEditDialogOpen}
+            />
+            <br />
+            {error && <p>Ошибка: {error?.message}</p>}
+          </div>
+        )}
+        <NotiEditDialog
+          isOpen={isEditDialogOpen}
+          setIsOpen={setIsEditDialogOpen}
+          noti={editingNoti}
+        />
+        <NotiCreateDialog
+          isOpen={isCreateDialogOpen}
+          setIsOpen={setIsCreateDialogOpen}
+          ownerId={user?.uid}
+        />
+        <NotiCreateButton
+          onClick={handleCreateDialogOpen}
+          className="fixed z-10 bottom-4 right-5"
+        />
+      </main>
+    </div>
   );
 }

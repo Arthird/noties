@@ -43,6 +43,7 @@ export default function LoginPage() {
     } catch (err: any) {
       console.error("Auth error:", JSON.stringify(err));
       setError(err.code || "Authentication error");
+      setPassword("")
       setLoading(false);
     }
   };

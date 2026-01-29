@@ -60,6 +60,7 @@ export default function NotiDialog({
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              autoComplete="off"
             />
             <hr className="my-1" />
             <Textarea
