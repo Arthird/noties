@@ -71,7 +71,7 @@ export default function HomePage() {
           <div
             className={clsx(
               "flex flex-1 text-neutral-50",
-              "w-full max-w-6xl sm:px-4",
+              "w-full max-w-6xl sm:px-4 px-1",
             )}
           >
             <NotiList
@@ -95,7 +95,7 @@ export default function HomePage() {
         />
         <NotiCreateButton
           onClick={handleCreateDialogOpen}
-          className="fixed z-10 bottom-4 right-5"
+          className="fixed z-10 bottom-4 right-3"
         />
       </main>
     </div>
