@@ -7,9 +7,13 @@
 
 html,
 body {
-  @apply bg-neutral-800;
+  @apply bg-neutral-800 text-neutral-200;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+button:hover {
+  cursor: pointer;
 }
