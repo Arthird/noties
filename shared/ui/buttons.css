@@ -1,0 +1,37 @@
+@layer components {
+  .button-accent {
+    @apply rounded-md border-2 border-transparent bg-amber-600 text-neutral-50 transition-colors duration-200 ease-in;
+  }
+
+  .button-accent:hover {
+    @apply bg-amber-500;
+  }
+
+  .button-accent:active {
+    @apply border-amber-600 bg-neutral-800;
+  }
+
+  .button-neutral {
+    @apply rounded-md border-2 border-transparent bg-neutral-700 text-neutral-50 transition-colors duration-200 ease-in;
+  }
+
+  .button-neutral:hover {
+    @apply bg-neutral-600 text-neutral-200;
+  }
+
+  .button-neutral:active {
+    @apply border-neutral-600 bg-neutral-800;
+  }
+
+  .button-delete {
+    @apply rounded-md border-2 border-transparent bg-neutral-700 text-neutral-50 transition-colors duration-200 ease-in;
+  }
+
+  .button-delete:hover {
+    @apply bg-amber-700;
+  }
+
+  .button-delete:active {
+    @apply border-amber-700 bg-neutral-800;
+  }
+}

@@ -1,0 +1,13 @@
+@layer components {
+  .color-border-primary {
+    @apply border-neutral-700;
+  }
+
+  .color-border-secondary {
+    @apply border-neutral-600;
+  }
+
+  .color-border-secondary:focus {
+    @apply border-neutral-500;
+  }
+}

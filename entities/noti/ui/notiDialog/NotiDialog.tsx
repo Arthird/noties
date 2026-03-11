@@ -50,10 +50,10 @@ export default function NotiDialog({
 
   return (
     <Dialog open={isOpen} onClose={handleDialogClose} className="relative z-50">
-      <DialogBackdrop className="fixed inset-0 bg-black/50" />
+      <DialogBackdrop className="dialog-backdrop" />
 
       <div className="fixed inset-0 flex items-center justify-center">
-        <DialogPanel className="h-full w-full rounded bg-neutral-800 p-4 shadow-xl sm:h-[80dvh] sm:w-4/5">
+        <DialogPanel className="dialog-panel">
           <div className="flex h-full flex-1 flex-col">
             <Input
               className="text-xl outline-0"
@@ -73,10 +73,8 @@ export default function NotiDialog({
               <Button
                 onClick={handleCancel}
                 className={clsx(
-                  "border-2 border-transparent px-2 py-1 transition-colors duration-200 ease-in",
-                  "rounded-md bg-neutral-700 text-neutral-50",
-                  "hover:bg-amber-700",
-                  "active:border-amber-700 active:bg-neutral-800",
+                  "button-delete",
+                  "px-2 py-1",
                   "disabled:cursor-not-allowed disabled:opacity-50",
                 )}
               >
@@ -85,10 +83,8 @@ export default function NotiDialog({
               <Button
                 onClick={handleSubmit}
                 className={clsx(
-                  "px-3 py-1 transition-colors duration-200 ease-in",
-                  "rounded-md border-2 border-transparent bg-neutral-700 text-neutral-50",
-                  "hover:bg-neutral-600 hover:text-neutral-200",
-                  "active:border-neutral-600 active:bg-neutral-800",
+                  "button-neutral",
+                  "px-3 py-1",
                   "disabled:cursor-not-allowed disabled:opacity-50",
                 )}
               >

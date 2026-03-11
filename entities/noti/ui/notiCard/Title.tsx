@@ -6,7 +6,7 @@ export default function Content({ children }: ContentProps) {
   return (
     <h3
       className={clsx(
-        "p-1 pb-0 text-lg text-neutral-200",
+        "color-text-secondary p-1 pb-0 text-lg",
         "line-clamp-1 break-all",
       )}
     >

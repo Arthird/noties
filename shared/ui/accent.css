@@ -1,0 +1,33 @@
+@layer components {
+  .color-accent-primary {
+    @apply bg-amber-600 text-neutral-50;
+  }
+
+  .color-accent-primary:hover {
+    @apply bg-amber-500;
+  }
+
+  .color-accent-primary:active {
+    @apply border-amber-600 bg-neutral-800;
+  }
+
+  .color-accent-secondary {
+    @apply bg-amber-700 text-neutral-50;
+  }
+
+  .color-accent-secondary:hover {
+    @apply bg-amber-700;
+  }
+
+  .color-accent-secondary:active {
+    @apply border-amber-700 bg-neutral-800;
+  }
+
+  .color-accent-text {
+    @apply text-amber-500;
+  }
+
+  .color-accent-error {
+    @apply text-amber-600;
+  }
+}

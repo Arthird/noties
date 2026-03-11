@@ -50,7 +50,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <main>
-        <div className="flex min-h-dvh justify-center text-neutral-50">
+        <div className="color-text-primary flex min-h-dvh justify-center">
           <Loading />
         </div>
       </main>
@@ -70,7 +70,7 @@ export default function HomePage() {
         ) : (
           <div
             className={clsx(
-              "flex flex-1 text-neutral-50",
+              "color-text-primary flex flex-1",
               "w-full max-w-6xl px-1 sm:px-4",
             )}
           >

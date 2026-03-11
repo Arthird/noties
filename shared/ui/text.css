@@ -1,0 +1,25 @@
+@layer components {
+  .color-text-primary {
+    @apply text-neutral-50;
+  }
+
+  .color-text-secondary {
+    @apply text-neutral-200;
+  }
+
+  .color-text-secondary:hover {
+    @apply text-neutral-200;
+  }
+
+  .color-text-tertiary {
+    @apply text-neutral-400;
+  }
+
+  .color-text-tertiary:hover {
+    @apply text-neutral-50;
+  }
+
+  .color-text-placeholder::placeholder {
+    @apply text-neutral-400;
+  }
+}

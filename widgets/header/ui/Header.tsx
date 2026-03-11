@@ -15,10 +15,10 @@ export default function Header() {
   };
 
   return (
-    <div className="flex w-full flex-col text-neutral-50">
+    <div className="color-text-primary flex w-full flex-col">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between p-1 sm:px-4">
-        <h1 className="text-3xl font-bold text-neutral-50">
-          Not<span className="text-amber-500">i</span>es
+        <h1 className="color-text-primary text-3xl font-bold">
+          Not<span className="color-accent-text">i</span>es
         </h1>
         <button
           onClick={handleSignOut}
@@ -28,7 +28,7 @@ export default function Header() {
           <img src="Logout.svg" alt="Logout" />
         </button>
       </header>
-      <hr className="mb-2 border border-neutral-700" />
+      <hr className="color-hr-primary mb-2 border" />
     </div>
   );
 }

@@ -1,0 +1,9 @@
+@layer components {
+  .input-neutral {
+    @apply w-full rounded border-2 border-neutral-600 bg-neutral-700 p-3 text-neutral-50 outline-0 transition-colors duration-200 placeholder:text-neutral-400;
+  }
+
+  .input-neutral:focus {
+    @apply border-neutral-500;
+  }
+}

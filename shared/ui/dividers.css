@@ -1,0 +1,9 @@
+@layer components {
+  .color-hr-primary {
+    @apply border-neutral-700;
+  }
+
+  .color-hr-secondary {
+    @apply border-neutral-600;
+  }
+}
