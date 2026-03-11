@@ -14,11 +14,11 @@ export default function NotiCreateButton({
     <Button
       onClick={onClick}
       className={clsx(
-        "transition-colors duration-200 ease-in w-12 h-12",
+        "h-12 w-12 transition-colors duration-200 ease-in",
         "border-2 border-transparent",
-        "text-neutral-50 rounded-md bg-amber-600",
+        "rounded-md bg-amber-600 text-neutral-50",
         "hover:bg-amber-500",
-        "active:bg-neutral-800 active:border-amber-600",
+        "active:border-amber-600 active:bg-neutral-800",
         "flex items-center justify-center",
         className,
       )}

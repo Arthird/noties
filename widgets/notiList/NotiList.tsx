@@ -25,7 +25,7 @@ export default function NotiList({
   return (
     <div className={clsx("flex flex-1", className)}>
       <Masonry
-        className="flex flex-1 -ml-4 w-auto"
+        className="-ml-4 flex w-auto flex-1"
         breakpointCols={breakpointColumnsObj}
       >
         {noties

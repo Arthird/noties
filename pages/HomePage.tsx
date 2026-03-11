@@ -50,7 +50,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <main>
-        <div className="flex justify-center text-neutral-50 min-h-dvh ">
+        <div className="flex min-h-dvh justify-center text-neutral-50">
           <Loading />
         </div>
       </main>
@@ -58,11 +58,11 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col min-h-screen">
+    <div className="flex min-h-screen flex-1 flex-col">
       <Header />
-      <main className="flex flex-1 justify-center h-full">
+      <main className="flex h-full flex-1 justify-center">
         {noties.length === 0 ? (
-          <div className=" flex flex-1 justify-center self-center h-full">
+          <div className="flex h-full flex-1 justify-center self-center">
             <p>
               Click on the button and create the first <b>Noti</b>
             </p>
@@ -71,7 +71,7 @@ export default function HomePage() {
           <div
             className={clsx(
               "flex flex-1 text-neutral-50",
-              "w-full max-w-6xl sm:px-4 px-1",
+              "w-full max-w-6xl px-1 sm:px-4",
             )}
           >
             <NotiList
@@ -95,7 +95,7 @@ export default function HomePage() {
         />
         <NotiCreateButton
           onClick={handleCreateDialogOpen}
-          className="fixed z-10 bottom-4 right-3"
+          className="fixed right-3 bottom-4 z-10"
         />
       </main>
     </div>

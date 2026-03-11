@@ -53,8 +53,8 @@ export default function NotiDialog({
       <DialogBackdrop className="fixed inset-0 bg-black/50" />
 
       <div className="fixed inset-0 flex items-center justify-center">
-        <DialogPanel className="rounded bg-neutral-800 p-4 shadow-xl sm:w-4/5 sm:h-[80dvh] w-full h-full">
-          <div className="flex flex-1 flex-col h-full">
+        <DialogPanel className="h-full w-full rounded bg-neutral-800 p-4 shadow-xl sm:h-[80dvh] sm:w-4/5">
+          <div className="flex h-full flex-1 flex-col">
             <Input
               className="text-xl outline-0"
               placeholder="Title"
@@ -64,7 +64,7 @@ export default function NotiDialog({
             />
             <hr className="my-1" />
             <Textarea
-              className="resize-none h-full outline-0"
+              className="h-full resize-none outline-0"
               placeholder="Content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -73,11 +73,11 @@ export default function NotiDialog({
               <Button
                 onClick={handleCancel}
                 className={clsx(
-                  "transition-colors duration-200 ease-in border-2 border-transparent px-2 py-1 ",
-                  "bg-neutral-700 text-neutral-50 rounded-md",
+                  "border-2 border-transparent px-2 py-1 transition-colors duration-200 ease-in",
+                  "rounded-md bg-neutral-700 text-neutral-50",
                   "hover:bg-amber-700",
-                  "active:bg-neutral-800 active:border-amber-700",
-                  "disabled:opacity-50 disabled:cursor-not-allowed",
+                  "active:border-amber-700 active:bg-neutral-800",
+                  "disabled:cursor-not-allowed disabled:opacity-50",
                 )}
               >
                 Cancel
@@ -85,11 +85,11 @@ export default function NotiDialog({
               <Button
                 onClick={handleSubmit}
                 className={clsx(
-                  "transition-colors duration-200 ease-in px-3 py-1",
-                  "bg-neutral-700 text-neutral-50 rounded-md border-2 border-transparent",
+                  "px-3 py-1 transition-colors duration-200 ease-in",
+                  "rounded-md border-2 border-transparent bg-neutral-700 text-neutral-50",
                   "hover:bg-neutral-600 hover:text-neutral-200",
                   "active:border-neutral-600 active:bg-neutral-800",
-                  "disabled:opacity-50 disabled:cursor-not-allowed",
+                  "disabled:cursor-not-allowed disabled:opacity-50",
                 )}
               >
                 Save

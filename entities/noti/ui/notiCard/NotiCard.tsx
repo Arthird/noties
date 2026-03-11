@@ -21,14 +21,14 @@ export default function NotiCard({
 }: NotiCardProps) {
   return (
     <div
-      className={clsx("bg-neutral-800 border-2 border-neutral-700", className)}
+      className={clsx("border-2 border-neutral-700 bg-neutral-800", className)}
     >
       <header>
         <Title>{noti.title}</Title>
       </header>
-      <hr className="border-neutral-700 border" />
+      <hr className="border border-neutral-700" />
       <Content>{noti.content}</Content>
-      <footer className="flex h-8 gap-1 m-1">
+      <footer className="m-1 flex h-8 gap-1">
         <EditButton className="flex-1" onClick={onEdit} />
         <DeleteButton className="flex-1" onClick={onDelete} />
       </footer>
