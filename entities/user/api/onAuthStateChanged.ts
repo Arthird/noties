@@ -1,4 +1,7 @@
-import { onAuthStateChanged as onFirebaseAuthStateChanged, type User as FirebaseUser } from "firebase/auth";
+import {
+  onAuthStateChanged as onFirebaseAuthStateChanged,
+  type User as FirebaseUser,
+} from "firebase/auth";
 import { auth } from "../../../shared/api/auth/auth";
 import { saveUserProfile } from "./saveUserProfile";
 

@@ -2,9 +2,7 @@ import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../../../shared/api/db/db";
 import type { User, UserProfile } from "../model/types";
 
-export async function saveUserProfile(
-  user: User,
-): Promise<UserProfile> {
+export async function saveUserProfile(user: User): Promise<UserProfile> {
   const userRef = doc(db, "users", user.uid);
   const existingDoc = await getDoc(userRef);
 

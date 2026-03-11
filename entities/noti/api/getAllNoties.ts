@@ -3,9 +3,7 @@ import { db } from "shared/api/db/db";
 import type { Noti, NotiDTO, NotiOwnerId } from "../model/types";
 import { dtoToNoti } from "entities/noti";
 
-export async function getAllNoties(
-  ownerId: NotiOwnerId,
-): Promise<Noti[]> {
+export async function getAllNoties(ownerId: NotiOwnerId): Promise<Noti[]> {
   const collectionRef = collection(db, "users", ownerId, "noties");
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);

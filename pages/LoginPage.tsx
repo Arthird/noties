@@ -43,7 +43,7 @@ export default function LoginPage() {
     } catch (err: any) {
       console.error("Auth error:", JSON.stringify(err));
       setError(err.code || "Authentication error");
-      setPassword("")
+      setPassword("");
       setLoading(false);
     }
   };
@@ -104,9 +104,7 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <p className="text-amber-600 text-sm text-center">
-              {error}
-            </p>
+            <p className="text-amber-600 text-sm text-center">{error}</p>
           )}
 
           <Button

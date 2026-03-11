@@ -1,4 +1,10 @@
-import type { Noti, NotiContent, NotiDTO, NotiId, NotiTitle } from "../model/types";
+import type {
+  Noti,
+  NotiContent,
+  NotiDTO,
+  NotiId,
+  NotiTitle,
+} from "../model/types";
 
 export function notiToDTO(noti: Noti): NotiDTO {
   return {

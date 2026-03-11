@@ -9,6 +9,6 @@ export async function deleteNoti(
 ): Promise<void> {
   const resolvedOwnerId = ownerId ?? notiIdToOwnerId(notiId);
   const docRef = doc(db, "users", resolvedOwnerId, "noties", notiId);
-  
+
   await deleteDoc(docRef);
 }
